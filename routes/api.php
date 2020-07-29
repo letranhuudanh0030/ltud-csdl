@@ -22,4 +22,4 @@ Route::apiResource('users', 'API\UsersController', ['only' => ['index', 'show']]
 
 
 Route::get('roles/{id}/users', 'API\RolesController@showUser');
-Route::apiResource('roles', 'API\RolesController', ['only' => ['index', 'show']]);
+Route::apiResource('roles', 'API\RolesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);

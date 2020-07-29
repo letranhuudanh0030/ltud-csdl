@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $guard = [];
+    protected $fillable = ['name', 'level_role', 'status'];
 }

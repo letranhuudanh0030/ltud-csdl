@@ -46,14 +46,57 @@ class RolesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *      path="/api/roles",
+     *      operationId="role store",
+     *      tags={"Roles"},
+     *      summary="Add Role",
+     *      description="Returns Roles data",
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="Name Role",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="level_role",
+     *          description="Role Level",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="status",
+     *          description="Role Status",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer",            
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     *      security={
+     *         {
+     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *         }
+     *     },
+     * )
      */
     public function store(Request $request)
     {
-        //
+        $role = Role::create($request->all());
+        return new RolesResource(Role::find($role->id));
+        // return $request->all();
     }
 
     /**
@@ -121,7 +164,7 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        return Role::findorFail($id);
+        return new RolesResource(Role::find($id));
     }
 
     /**
@@ -136,25 +179,98 @@ class RolesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *      path="/api/roles/{id}",
+     *      operationId="role update",
+     *      tags={"Roles"},
+     *      summary="Update Role",
+     *      description="Returns Roles data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID Role",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="Name Role",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="level_role",
+     *          description="Role Level",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="status",
+     *          description="Role Status",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer",            
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     *      security={
+     *         {
+     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *         }
+     *     },
+     * )
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->update($request->all());
+        return $role;
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *      path="/api/roles/{id}",
+     *      operationId="role delete",
+     *      tags={"Roles"},
+     *      summary="Delete Role",
+     *      description="Returns Roles data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID Role",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     *      security={
+     *         {
+     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *         }
+     *     },
+     * )
      */
     public function destroy($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+        return response('Delete Role Success', 200);
     }
 }
