@@ -48,10 +48,9 @@ class RolesController extends Controller
     /**
      * @OA\Post(
      *      path="/api/roles",
-     *      operationId="role store",
+     *      operationId="addRole",
      *      tags={"Roles"},
-     *      summary="Add Role",
-     *      description="Returns Roles data",
+     *      summary="Add a new role to the store",
      *      @OA\Parameter(
      *          name="name",
      *          description="Name Role",
@@ -79,6 +78,22 @@ class RolesController extends Controller
      *              type="integer",            
      *          )
      *      ),
+     *     @OA\Parameter(
+     *         name="selectStatus",
+     *         in="query",
+     *         description="Status values that need to be considered for filter",
+     *         required=true,
+     *         style="form",
+     *         explode=true,
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="string",
+     *                 default="available",
+     *                 enum={1,2,3},
+     *             ) 
+     *         )
+     *     ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"

@@ -42,16 +42,35 @@ class UsersController extends Controller
     {
         //
     }
-
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *      path="/api/users",
+     *      operationId="addUser",
+     *      tags={"Users"},
+     *      summary="Add a new user",
+     *      @OA\RequestBody(
+     *          description="Pet object that needs to be added to the store",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/User"
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Returns list of users
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create($request->all());
+        return response('Add user completed', 200);
     }
 
     /**

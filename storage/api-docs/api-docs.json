@@ -41,9 +41,8 @@
                 "tags": [
                     "Roles"
                 ],
-                "summary": "Add Role",
-                "description": "Returns Roles data",
-                "operationId": "role store",
+                "summary": "Add a new role to the store",
+                "operationId": "addRole",
                 "parameters": [
                     {
                         "name": "name",
@@ -70,6 +69,26 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "selectStatus",
+                        "in": "query",
+                        "description": "Status values that need to be considered for filter",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "default": "available",
+                                "enum": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            }
                         }
                     }
                 ],
@@ -295,10 +314,94 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add a new user",
+                "operationId": "addUser",
+                "requestBody": {
+                    "description": "Pet object that needs to be added to the store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         }
     },
     "components": {
+        "schemas": {
+            "User": {
+                "title": "User model",
+                "description": "User model",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "User Name",
+                        "type": "string",
+                        "default": "Name"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email",
+                        "type": "string",
+                        "default": "Email@example.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password",
+                        "type": "string",
+                        "default": "password"
+                    },
+                    "role_id": {
+                        "title": "Role ID",
+                        "description": "Role ID",
+                        "type": "integer",
+                        "default": "number"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Address",
+                        "type": "string",
+                        "default": "Address"
+                    },
+                    "phone": {
+                        "title": "Phone Number",
+                        "description": "Phone Number",
+                        "type": "string",
+                        "format": "string",
+                        "default": "Phone Number"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "description": "Status",
+                        "type": "integer",
+                        "format": "integer",
+                        "default": "Status"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "Password Based": {
                 "type": "oauth2",

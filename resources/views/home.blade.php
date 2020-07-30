@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{ route('l5-swagger.api') }}">Open Api</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

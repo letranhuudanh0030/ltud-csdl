@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users', 'API\UsersController', ['only' => ['index', 'show']]);
+Route::apiResource('users', 'API\UsersController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
 
 
 Route::get('roles/{id}/users', 'API\RolesController@showUser');
