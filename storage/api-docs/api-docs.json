@@ -322,7 +322,7 @@
                 "summary": "Add a new user",
                 "operationId": "addUser",
                 "requestBody": {
-                    "description": "Pet object that needs to be added to the store",
+                    "description": "User object that needs to be added to the store",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -332,6 +332,115 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Show User Detail",
+                "description": "Returns user",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update User",
+                "description": "Returns use data",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User object that needs to be added to the update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete User",
+                "description": "Returns use data",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -364,38 +473,42 @@
                         "title": "Email",
                         "description": "Email",
                         "type": "string",
+                        "format": "email",
                         "default": "Email@example.com"
                     },
                     "password": {
                         "title": "Password",
                         "description": "Password",
                         "type": "string",
+                        "format": "password",
                         "default": "password"
                     },
                     "role_id": {
                         "title": "Role ID",
                         "description": "Role ID",
                         "type": "integer",
+                        "format": "int32",
                         "default": "number"
                     },
                     "address": {
                         "title": "Address",
                         "description": "Address",
                         "type": "string",
+                        "format": "address",
                         "default": "Address"
                     },
                     "phone": {
                         "title": "Phone Number",
                         "description": "Phone Number",
                         "type": "string",
-                        "format": "string",
+                        "format": "phone",
                         "default": "Phone Number"
                     },
                     "status": {
                         "title": "Status",
                         "description": "Status",
                         "type": "integer",
-                        "format": "integer",
+                        "format": "int32",
                         "default": "Status"
                     }
                 },

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 /**
- * Class Order
+ * Class User
  * 
  * @OA\Schema(
  *     title="User model",
@@ -32,6 +32,7 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
+     *     format="email",
      *     title="Email",
      *     default="Email@example.com",
      *     description="Email",
@@ -43,6 +44,7 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
+     *     format="password",
      *     title="Password",
      *     default="password",
      *     description="Password",
@@ -54,6 +56,7 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="integer",
+     *     format="int32",
      *     title="Role ID",
      *     default="number",
      *     description="Role ID",
@@ -65,6 +68,7 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
+     *     format="address",
      *     title="Address",
      *     default="Address",
      *     description="Address",
@@ -75,7 +79,8 @@ class User extends Authenticatable
     private $address;
     /**
      * @OA\Property(
-     *     format="string",
+     *     type="string",
+     *     format="phone",
      *     title="Phone Number",
      *     default="Phone Number",
      *     description="Phone Number",
@@ -86,7 +91,8 @@ class User extends Authenticatable
     private $phone;
     /**
      * @OA\Property(
-     *     format="integer",
+     *     type="integer",
+     *     format="int32",
      *     title="Status",
      *     default="Status",
      *     description="Status",

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -49,7 +50,7 @@ class UsersController extends Controller
      *      tags={"Users"},
      *      summary="Add a new user",
      *      @OA\RequestBody(
-     *          description="Pet object that needs to be added to the store",
+     *          description="User object that needs to be added to the store",
      *          required=true,
      *          @OA\JsonContent(
      *              ref="#/components/schemas/User"
@@ -65,23 +66,47 @@ class UsersController extends Controller
      *       }
      *     )
      *
-     * Returns list of users
+     * Returns user
      */
     public function store(Request $request)
     {
+        $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->all());
-        return response('Add user completed', 200);
+        $user = new UsersResource(User::find($user->id));
+        return response($user, 200);
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/api/users/{id}",
+     *      operationId="getUser",
+     *      tags={"Users"},
+     *      summary="Show User Detail",
+     *      description="Returns user",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Returns list of users
      */
     public function show($id)
     {
-        //
+        return new UsersResource(User::findOrFail($id));
     }
 
     /**
@@ -96,25 +121,80 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *      path="/api/users/{id}",
+     *      operationId="updateUser",
+     *      tags={"Users"},
+     *      summary="Update User",
+     *      description="Returns use data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="User ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          description="User object that needs to be added to the update",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/User"
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Returns user
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $request->merge(['password' => Hash::make($request->password)]);
+        $user->update($request->all());
+        return $user;
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *      path="/api/users/{id}",
+     *      operationId="deleteUser",
+     *      tags={"Users"},
+     *      summary="Delete User",
+     *      description="Returns use data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="User ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Returns list of users
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response('Delete Role Success', 200);
     }
 }
