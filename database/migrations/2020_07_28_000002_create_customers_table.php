@@ -20,7 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('email', 50);
             $table->string('company', 100);
             $table->string('address', 100);
-            $table->dateTime('time_event');
+            $table->dateTime('start_event');
             $table->text('note')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();

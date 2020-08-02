@@ -66,7 +66,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private $time_event;
+    private $start_event;
 
     /**
      * @OA\Property(
@@ -77,5 +77,5 @@ class Customer extends Model
      */
     private $note;
 
-    protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'time_event', 'note', 'status'];
+    protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'start_event', 'note', 'status'];
 }

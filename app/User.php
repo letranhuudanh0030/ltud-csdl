@@ -45,8 +45,8 @@ class User extends Authenticatable
     private $password;
     /**
      * @OA\Property(
-     *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Role")
+     *     type="integer",
+     *     format="int64"
      * )
      *
      * @var integer
@@ -79,7 +79,7 @@ class User extends Authenticatable
     private $status;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role_id', 'address', 'phone', 'status'
+        'name', 'email', 'password', 'role_id', 'address', 'phone', 'status', 'uuid'
     ];
 
     /**

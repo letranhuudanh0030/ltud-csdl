@@ -7,6 +7,7 @@ use App\Http\Resources\UsersResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -31,7 +32,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return UsersResource::collection(User::paginate(5));
+        return UsersResource::collection(User::orderBy('created_at','desc')->paginate(5));
     }
 
     /**
@@ -70,7 +71,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge(['uuid' => Str::uuid()]);
+        $request->merge(['uuid' => (string) Str::uuid()]);
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->all());
         $user = new UsersResource(User::find($user->id));
@@ -107,6 +108,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        // return $id;
         return new UsersResource(User::findOrFail($id));
     }
 

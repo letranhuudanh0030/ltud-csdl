@@ -427,7 +427,7 @@
                     "address": {
                         "type": "string"
                     },
-                    "time_event": {
+                    "start_event": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -467,10 +467,8 @@
                         "format": "password"
                     },
                     "role_id": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Role"
-                        }
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "address": {
                         "type": "string"
