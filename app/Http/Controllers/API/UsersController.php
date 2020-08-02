@@ -23,7 +23,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key_security_example": {123}}
      *       }
      *     )
      *
@@ -70,6 +70,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['uuid' => Str::uuid()]);
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->all());
         $user = new UsersResource(User::find($user->id));

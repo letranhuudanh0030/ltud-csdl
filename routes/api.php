@@ -18,8 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users', 'API\UsersController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
+Route::group(['prefix' => 'users'], function () {
+    Route::apiResource('/', 'API\UsersController', ['except' => ['create', 'edit']]);
+});
 
+Route::group(['prefix' => 'roles'], function () {
+    Route::get('/{id}/users', 'API\RolesController@showUser');
+    Route::apiResource('/', 'API\RolesController', ['except' => ['create', 'edit']]);
+});
 
-Route::get('roles/{id}/users', 'API\RolesController@showUser');
-Route::apiResource('roles', 'API\RolesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
+Route::group(['prefix' => 'customers'], function () {
+    Route::apiResource('/', 'API\CustomersController', ['except' => ['create', 'edit']]);
+});

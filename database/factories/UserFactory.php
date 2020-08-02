@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'uuid' => Str::uuid(),
         'role_id' => Role::get(['id'])->random()->id,
         'phone' => $faker->e164PhoneNumber,
         'address' => $faker->address,

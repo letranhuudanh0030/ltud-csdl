@@ -51,49 +51,13 @@ class RolesController extends Controller
      *      operationId="addRole",
      *      tags={"Roles"},
      *      summary="Add a new role to the store",
-     *      @OA\Parameter(
-     *          name="name",
-     *          description="Name Role",
+     *      @OA\RequestBody(
+     *          description="Role object that needs to be added to the store",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/Role"
+     *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="level_role",
-     *          description="Role Level",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="status",
-     *          description="Role Status",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer",            
-     *          )
-     *      ),
-     *     @OA\Parameter(
-     *         name="selectStatus",
-     *         in="query",
-     *         description="Status values that need to be considered for filter",
-     *         required=true,
-     *         style="form",
-     *         explode=true,
-     *         @OA\Schema(
-     *             type="array",
-     *             @OA\Items(
-     *                 type="string",
-     *                 default="available",
-     *                 enum={1,2,3},
-     *             ) 
-     *         )
-     *     ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -209,29 +173,12 @@ class RolesController extends Controller
      *              type="integer"
      *          )
      *      ),
-     *      @OA\Parameter(
-     *          name="name",
-     *          description="Name Role",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="level_role",
-     *          description="Role Level",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="status",
-     *          description="Role Status",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer",            
-     *          )
+     *      @OA\RequestBody(
+     *          description="User object that needs to be added to the update",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/User"
+     *          ),
      *      ),
      *      @OA\Response(
      *          response=200,

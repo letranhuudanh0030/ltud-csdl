@@ -9,8 +9,7 @@ use Illuminate\Notifications\Notifiable;
  * Class User
  * 
  * @OA\Schema(
- *     title="User model",
- *     description="User model",
+ *      type="object"
  * )
  */
 class User extends Authenticatable
@@ -21,9 +20,6 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
-     *     title="Name",
-     *     default="Name",
-     *     description="User Name",
      * )
      *
      * @var string
@@ -33,9 +29,6 @@ class User extends Authenticatable
      * @OA\Property(
      *     type="string",
      *     format="email",
-     *     title="Email",
-     *     default="Email@example.com",
-     *     description="Email",
      * )
      *
      * @var string
@@ -45,9 +38,6 @@ class User extends Authenticatable
      * @OA\Property(
      *     type="string",
      *     format="password",
-     *     title="Password",
-     *     default="password",
-     *     description="Password",
      * )
      *
      * @var string
@@ -55,11 +45,8 @@ class User extends Authenticatable
     private $password;
     /**
      * @OA\Property(
-     *     type="integer",
-     *     format="int32",
-     *     title="Role ID",
-     *     default="number",
-     *     description="Role ID",
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/Role")
      * )
      *
      * @var integer
@@ -68,10 +55,6 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
-     *     format="address",
-     *     title="Address",
-     *     default="Address",
-     *     description="Address",
      * )
      *
      * @var string
@@ -80,10 +63,6 @@ class User extends Authenticatable
     /**
      * @OA\Property(
      *     type="string",
-     *     format="phone",
-     *     title="Phone Number",
-     *     default="Phone Number",
-     *     description="Phone Number",
      * )
      *
      * @var string
@@ -93,9 +72,6 @@ class User extends Authenticatable
      * @OA\Property(
      *     type="integer",
      *     format="int32",
-     *     title="Status",
-     *     default="Status",
-     *     description="Status",
      * )
      *
      * @var integer

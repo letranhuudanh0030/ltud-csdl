@@ -43,55 +43,17 @@
                 ],
                 "summary": "Add a new role to the store",
                 "operationId": "addRole",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Name Role",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "level_role",
-                        "in": "query",
-                        "description": "Role Level",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "description": "Role Status",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "selectStatus",
-                        "in": "query",
-                        "description": "Status values that need to be considered for filter",
-                        "required": true,
-                        "style": "form",
-                        "explode": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "default": "available",
-                                "enum": [
-                                    1,
-                                    2,
-                                    3
-                                ]
+                "requestBody": {
+                    "description": "Role object that needs to be added to the store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Role"
                             }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -208,32 +170,19 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Name Role",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "level_role",
-                        "in": "query",
-                        "description": "Role Level",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "description": "Role Status",
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "User object that needs to be added to the update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -311,7 +260,9 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key_security_example": [
+                            123
+                        ]
                     }
                 ]
             },
@@ -459,57 +410,77 @@
     },
     "components": {
         "schemas": {
-            "User": {
-                "title": "User model",
-                "description": "User model",
+            "Customer": {
                 "properties": {
                     "name": {
-                        "title": "Name",
-                        "description": "User Name",
-                        "type": "string",
-                        "default": "Name"
-                    },
-                    "email": {
-                        "title": "Email",
-                        "description": "Email",
-                        "type": "string",
-                        "format": "email",
-                        "default": "Email@example.com"
-                    },
-                    "password": {
-                        "title": "Password",
-                        "description": "Password",
-                        "type": "string",
-                        "format": "password",
-                        "default": "password"
-                    },
-                    "role_id": {
-                        "title": "Role ID",
-                        "description": "Role ID",
-                        "type": "integer",
-                        "format": "int32",
-                        "default": "number"
-                    },
-                    "address": {
-                        "title": "Address",
-                        "description": "Address",
-                        "type": "string",
-                        "format": "address",
-                        "default": "Address"
+                        "type": "string"
                     },
                     "phone": {
-                        "title": "Phone Number",
-                        "description": "Phone Number",
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "time_event": {
                         "type": "string",
-                        "format": "phone",
-                        "default": "Phone Number"
+                        "format": "date-time"
+                    },
+                    "note": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "level_role": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "status": {
-                        "title": "Status",
-                        "description": "Status",
                         "type": "integer",
-                        "format": "int32",
-                        "default": "Status"
+                        "format": "int32"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "role_id": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "type": "object"
