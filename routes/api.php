@@ -3,11 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
