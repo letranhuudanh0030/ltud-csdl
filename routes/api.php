@@ -24,4 +24,7 @@ Route::apiResource('users', 'API\UsersController', ['except' => ['create', 'edit
 Route::get('roles/{id}/users', 'API\RolesController@showUser');
 Route::apiResource('roles', 'API\RolesController', ['except' => ['create', 'edit']]);
 
+Route::get('customers/{id}/events', 'API\CustomersController@showEvent');
 Route::apiResource('customers', 'API\CustomersController', ['except' => ['create', 'edit']]);
+
+Route::apiResource('events', 'API\EventsController', ['except' => ['create', 'edit']]);

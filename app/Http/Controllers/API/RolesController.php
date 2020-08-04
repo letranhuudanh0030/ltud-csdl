@@ -84,7 +84,7 @@ class RolesController extends Controller
      *      operationId="role_users",
      *      tags={"Roles"},
      *      summary="Show User Belong To Role ID",
-     *      description="Returns Users data",
+     *      description="Returns user list data",
      *      @OA\Parameter(
      *          name="id",
      *          description="Role ID",
@@ -109,7 +109,7 @@ class RolesController extends Controller
      */
     public function showUser($id)
     {
-        return UsersResource::collection(User::where('role_id', $id)->paginate(5));
+        return UsersResource::collection(User::where('role_id', $id)->paginate(10));
     }
 
     /**
@@ -233,6 +233,6 @@ class RolesController extends Controller
     {
         $role = Role::findOrFail($id);
         $role->delete();
-        return response('Delete Role Success', 200);
+        return response($role->name . ' has been deleted!', 200);
     }
 }

@@ -2,59 +2,54 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Event;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UsersResource;
-use App\User;
+use App\Http\Resources\EventsResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-class UsersController extends Controller
+class EventsController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/api/users",
-     *      operationId="getUsersList",
-     *      tags={"Users"},
-     *      summary="Get list of users",
-     *      description="Returns list of users",
+     *      path="/api/events",
+     *      operationId="getEventsList",
+     *      tags={"Events"},
+     *      summary="Get list of events",
+     *      description="Returns list of events",
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {123}}
+     *           {"api_key_security_example": {}}
      *       }
      *     )
      *
-     * Returns list of users
+     * Returns list of events
      */
     public function index()
     {
-        return UsersResource::collection(User::orderBy('created_at','desc')->paginate(10));
+        return EventsResource::collection(Event::orderBy('created_at', 'desc')->paginate(10)); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
     }
+
     /**
      * @OA\Post(
-     *      path="/api/users",
-     *      operationId="addUser",
-     *      tags={"Users"},
-     *      summary="Add a new user",
+     *      path="/api/events",
+     *      operationId="addEvent",
+     *      tags={"Events"},
+     *      summary="Add a new event",
      *      @OA\RequestBody(
-     *          description="User object that needs to be added to the store",
+     *          description="Event object that needs to be added to the store",
      *          required=true,
      *          @OA\JsonContent(
-     *              ref="#/components/schemas/User"
+     *              ref="#/components/schemas/Event"
      *          ),
      *      ),
      *      @OA\Response(
@@ -67,24 +62,21 @@ class UsersController extends Controller
      *       }
      *     )
      *
-     * Returns user
+     * Returns Event
      */
     public function store(Request $request)
     {
-        $request->merge(['uuid' => (string) Str::uuid()]);
-        $request->merge(['password' => Hash::make($request->password)]);
-        $user = User::create($request->all());
-        $user = new UsersResource(User::find($user->id));
-        return response($user, 200);
+        $event = Event::create($request->all());
+        return response($event->name . ' has been created!', 200);
     }
 
     /**
      * @OA\Get(
-     *      path="/api/users/{id}",
-     *      operationId="getUser",
-     *      tags={"Users"},
-     *      summary="Show User Detail",
-     *      description="Returns user",
+     *      path="/api/events/{id}",
+     *      operationId="getEvent",
+     *      tags={"Events"},
+     *      summary="Show Event Detail",
+     *      description="Returns Event",
      *      @OA\Parameter(
      *          name="id",
      *          description="ID",
@@ -104,12 +96,11 @@ class UsersController extends Controller
      *       }
      *     )
      *
-     * Returns list of users
+     * Returns event
      */
     public function show($id)
     {
-        // return $id;
-        return new UsersResource(User::findOrFail($id));
+        return new EventsResource(Event::findOrFail($id));
     }
 
     /**
@@ -125,10 +116,10 @@ class UsersController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/api/users/{id}",
-     *      operationId="updateUser",
-     *      tags={"Users"},
-     *      summary="Update User",
+     *      path="/api/events/{id}",
+     *      operationId="updateEvent",
+     *      tags={"Events"},
+     *      summary="Update Event",
      *      description="Returns use data",
      *      @OA\Parameter(
      *          name="id",
@@ -140,10 +131,10 @@ class UsersController extends Controller
      *          )
      *      ),
      *      @OA\RequestBody(
-     *          description="User object that needs to be added to the update",
+     *          description="Event object that needs to be added to the update",
      *          required=true,
      *          @OA\JsonContent(
-     *              ref="#/components/schemas/User"
+     *              ref="#/components/schemas/Event"
      *          ),
      *      ),
      *      @OA\Response(
@@ -156,22 +147,21 @@ class UsersController extends Controller
      *       }
      *     )
      *
-     * Returns user
+     * Returns event
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $request->merge(['password' => Hash::make($request->password)]);
-        $user->update($request->all());
-        return $user;
+        $event = Event::findOrFail($id);
+        $event->update($request->all());
+        return $event;
     }
 
     /**
      * @OA\Delete(
-     *      path="/api/users/{id}",
-     *      operationId="deleteUser",
-     *      tags={"Users"},
-     *      summary="Delete User",
+     *      path="/api/events/{id}",
+     *      operationId="deleteEvent",
+     *      tags={"Events"},
+     *      summary="Delete event",
      *      description="Returns use data",
      *      @OA\Parameter(
      *          name="id",
@@ -192,12 +182,12 @@ class UsersController extends Controller
      *       }
      *     )
      *
-     * Returns user
+     * Returns event
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response($user->name . ' has been deleted!', 200);
+        $event = Event::findOrFail($id);
+        $event->delete();
+        return response($event->name . ' has been deleted!', 200);
     }
 }

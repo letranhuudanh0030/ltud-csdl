@@ -77,5 +77,15 @@ class Customer extends Model
      */
     private $note;
 
+    /**
+     * @OA\Property(
+     *     type="integer",
+     *     format="int32"
+     * )
+     *
+     * @var integer
+     */
+    private $status;
+
     protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'start_event', 'note', 'status'];
 }
