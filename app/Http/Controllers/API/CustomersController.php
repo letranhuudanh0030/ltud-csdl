@@ -160,10 +160,10 @@ class CustomersController extends Controller
      *      operationId="updateCustomer",
      *      tags={"Customers"},
      *      summary="Update Customer",
-     *      description="Returns use data",
+     *      description="Returns customer data",
      *      @OA\Parameter(
      *          name="id",
-     *          description="User ID",
+     *          description="Customer ID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -187,13 +187,13 @@ class CustomersController extends Controller
      *       }
      *     )
      *
-     * Returns user
+     * Returns customer
      */
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
         $customer->update($request->all());
-        return $customer;
+        return response($customer, 200);
     }
 
     /**
@@ -202,10 +202,10 @@ class CustomersController extends Controller
      *      operationId="deleteCustomer",
      *      tags={"Customers"},
      *      summary="Delete Customer",
-     *      description="Returns use data",
+     *      description="Returns customer data",
      *      @OA\Parameter(
      *          name="id",
-     *          description="User ID",
+     *          description="Customer ID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

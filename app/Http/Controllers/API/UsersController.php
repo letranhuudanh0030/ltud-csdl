@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TasksResource;
 use App\Http\Resources\UsersResource;
+use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -110,6 +112,39 @@ class UsersController extends Controller
     {
         // return $id;
         return new UsersResource(User::findOrFail($id));
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/users/{id}/tasks",
+     *      operationId="user_tasks",
+     *      tags={"Users"},
+     *      summary="Show Tasks Belong To User ID",
+     *      description="Returns task list data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     * Returns list of task
+     */
+    public function showTask($id)
+    {
+        return TasksResource::collection(Task::where('user_id', $id)->paginate(10));
     }
 
     /**

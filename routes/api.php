@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('users/{id}/tasks', 'API\UsersController@showTask');
 Route::apiResource('users', 'API\UsersController', ['except' => ['create', 'edit']]);
 
 Route::get('roles/{id}/users', 'API\RolesController@showUser');
@@ -27,4 +27,7 @@ Route::apiResource('roles', 'API\RolesController', ['except' => ['create', 'edit
 Route::get('customers/{id}/events', 'API\CustomersController@showEvent');
 Route::apiResource('customers', 'API\CustomersController', ['except' => ['create', 'edit']]);
 
+Route::get('events/{id}/tasks', 'API\EventsController@showTask');
 Route::apiResource('events', 'API\EventsController', ['except' => ['create', 'edit']]);
+
+Route::apiResource('tasks', 'API\TasksController', ['except' => ['create', 'edit']]);
