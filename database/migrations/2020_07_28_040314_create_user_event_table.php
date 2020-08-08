@@ -17,7 +17,8 @@ class CreateUserEventTable extends Migration
             $table->id();
             $table->bigInteger('event_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('status');
+            $table->integer('status')->define(0);
+            ;
             $table->timestamps();
         });
 

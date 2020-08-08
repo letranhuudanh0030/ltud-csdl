@@ -20,7 +20,7 @@ class Event extends Model
      *
      * @var string
      */
-    private $name;
+    public $name;
 
      /**
      * @OA\Property(

@@ -34,18 +34,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return UsersResource::collection(User::orderBy('created_at','desc')->paginate(10));
+        $users = User::with('role')->orderBy('created_at','desc')->paginate(10);
+        return UsersResource::collection($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
     /**
      * @OA\Post(
      *      path="/api/users",
@@ -145,17 +137,6 @@ class UsersController extends Controller
     public function showTask($id)
     {
         return TasksResource::collection(Task::where('user_id', $id)->paginate(10));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

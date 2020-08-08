@@ -7,6 +7,7 @@ use App\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomersResource;
 use App\Http\Resources\EventsResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -36,16 +37,6 @@ class CustomersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * @OA\Post(
      *      path="/api/customers",
      *      operationId="addCustomer",
@@ -72,8 +63,16 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = Customer::create($request->all());
-        return response($customer, 200);
+        $customer = Customer::create($request->except('event'));
+        if($request->event){
+            $eventReq = $request->event;
+            $eventReq['customer_id'] = $customer->id;
+            $request->merge([
+                'event' => $eventReq
+            ]);
+            $event = Event::create($eventReq);
+        }
+        return response('Created successfully!', 200 );
     }
 
     /**
@@ -144,17 +143,6 @@ class CustomersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * @OA\Put(
      *      path="/api/customers/{id}",
      *      operationId="updateCustomer",
@@ -192,7 +180,20 @@ class CustomersController extends Controller
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
-        $customer->update($request->all());
+        $customer->update($request->except('event'));
+        if($request->event){
+            $event = Event::where('customer_id', $customer->id)->first();
+            $eventReq = $request->event;
+            if($event){
+                $event->update($eventReq);
+            } else{
+                $eventReq['customer_id'] = $customer->id;
+                $request->merge([
+                    'event' => $eventReq
+                ]);
+                $event = Event::create($eventReq);
+            }
+        }
         return response($customer, 200);
     }
 

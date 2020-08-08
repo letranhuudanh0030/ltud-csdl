@@ -87,5 +87,17 @@ class Customer extends Model
      */
     private $status;
 
+    /**
+     * @OA\Property(
+     *      ref="#/components/schemas/Event",
+     * )
+     *
+     * @var object
+     */
+    private $event;
+
+
+
+
     protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'start_event', 'note', 'status'];
 }

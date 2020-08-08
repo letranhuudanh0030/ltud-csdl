@@ -42,4 +42,9 @@ class Role extends Model
     private $status;
 
     protected $fillable = ['name', 'level_role', 'status'];
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'role_id');
+    }
 }
