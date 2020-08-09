@@ -44,4 +44,17 @@ class EventUserController extends Controller
         $eventUser->delete();
         return response($eventUser->user_id . ' has been deleted!', 200);
     }
+    public function create()
+    {
+        //nothing
+    }
+    public function edit($id)
+    {
+        //nothing
+    }
+    public function destroy($id)
+    {
+        //nothing
+    }
+
 }

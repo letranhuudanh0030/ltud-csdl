@@ -1146,6 +1146,23 @@
                 "type": "object"
             }
         },
+        "EventUser": {
+            "properties": {
+                "event_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "type": "object"
+        },
         "securitySchemes": {
             "Password Based": {
                 "type": "oauth2",
