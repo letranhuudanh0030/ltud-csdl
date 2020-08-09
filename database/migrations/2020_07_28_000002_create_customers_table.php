@@ -21,8 +21,6 @@ class CreateCustomersTable extends Migration
             $table->string('email', 50)->unique();
             $table->string('company', 100)->nullable();
             $table->string('address', 100)->nullable();
-            $table->dateTime('start_event')->nullable();
-            $table->text('note')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
