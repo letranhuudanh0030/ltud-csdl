@@ -33,7 +33,7 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        return CustomersResource::collection(Customer::orderBy('created_at', 'desc')->paginate(10)); 
+        return CustomersResource::collection(Customer::with('event')->orderBy('created_at', 'desc')->paginate(10)); 
     }
 
     /**
@@ -73,6 +73,7 @@ class CustomersController extends Controller
                 'event' => $eventReq
             ]);
             $event = Event::create($eventReq);
+
         }
         return response('Created successfully!', 200 );
     }

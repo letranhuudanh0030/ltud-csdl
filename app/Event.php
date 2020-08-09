@@ -81,4 +81,9 @@ class Event extends Model
     private $status;
 
     protected $fillable = ['name', 'customer_id', 'time_start', 'time_end', 'summary', 'result', 'status'];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

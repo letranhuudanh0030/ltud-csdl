@@ -58,25 +58,6 @@ class Customer extends Model
      */
     private $address;
 
-     /**
-     * @OA\Property(
-     *     type="string",
-     *     format="date-time"
-     * )
-     *
-     * @var string
-     */
-    private $start_event;
-
-    /**
-     * @OA\Property(
-     *     type="string",
-     * )
-     *
-     * @var string
-     */
-    private $note;
-
     /**
      * @OA\Property(
      *     type="integer",
@@ -99,5 +80,10 @@ class Customer extends Model
 
 
 
-    protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'start_event', 'note', 'status'];
+    protected $fillable = ['name', 'phone', 'email', 'company', 'address', 'status'];
+
+    public function event()
+    {
+        return $this->hasMany(Event::class, 'customer_id', 'id');
+    }
 }
