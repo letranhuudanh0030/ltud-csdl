@@ -17,7 +17,7 @@ class CustomersResource extends JsonResource
         // return parent::toArray($request);
 
         $event = $this->event;
-        if(!$event->first()['name']){
+        if(!$event->first()){
             $eventArr = [];
         } else {
             $eventArr = [
