@@ -12,8 +12,6 @@ $factory->define(Customer::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'company' => $faker->company,
         'address' => $faker->address,
-        'start_event' => now(),
-        'note' => $faker->text,
         'status' => $faker->numberBetween(0,3)
     ];
 });
