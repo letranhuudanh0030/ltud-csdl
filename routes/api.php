@@ -31,3 +31,6 @@ Route::get('events/{id}/tasks', 'API\EventsController@showTask');
 Route::apiResource('events', 'API\EventsController', ['except' => ['create', 'edit']]);
 
 Route::apiResource('tasks', 'API\TasksController', ['except' => ['create', 'edit']]);
+
+Route::get('Event/{id}', 'API\EventUserController@destroyEvent@showUserOfEvent');
+Route::apiResource('events', 'API\EventUserController', ['except' => ['create', 'edit','destroy']]);
