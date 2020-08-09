@@ -67,6 +67,8 @@ class CustomersController extends Controller
         if($request->event){
             $eventReq = $request->event;
             $eventReq['customer_id'] = $customer->id;
+            $eventReq['time_start'] = Carbon::create($eventReq['time_start']);
+            $eventReq['time_end'] = Carbon::create($eventReq['time_end']);
             $request->merge([
                 'event' => $eventReq
             ]);

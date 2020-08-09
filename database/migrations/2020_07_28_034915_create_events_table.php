@@ -18,8 +18,8 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->string('name', 50);
             $table->bigInteger('customer_id')->unsigned();
-            $table->dateTime('time_start');
-            $table->dateTime('time_end');
+            $table->datetime('time_start', 0);
+            $table->datetime('time_end', 0);
             $table->text('summary')->nullable();
             $table->text('result')->nullable();
             $table->integer('status')->default(0);
