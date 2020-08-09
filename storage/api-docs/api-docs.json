@@ -1024,13 +1024,6 @@
                     "address": {
                         "type": "string"
                     },
-                    "start_event": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "note": {
-                        "type": "string"
-                    },
                     "status": {
                         "type": "integer",
                         "format": "int32"
