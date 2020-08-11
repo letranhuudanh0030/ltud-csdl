@@ -24,7 +24,7 @@ class RolesController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *

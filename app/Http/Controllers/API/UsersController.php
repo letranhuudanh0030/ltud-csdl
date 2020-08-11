@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class UsersController extends Controller
 {
@@ -26,7 +27,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {123}}
+     *           {"api_key": {123}}
      *       }
      *     )
      *
@@ -57,7 +58,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -94,7 +95,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -128,7 +129,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -168,7 +169,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -204,7 +205,7 @@ class UsersController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *

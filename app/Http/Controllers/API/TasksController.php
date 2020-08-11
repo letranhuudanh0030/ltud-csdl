@@ -22,7 +22,7 @@ class TasksController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -62,7 +62,7 @@ class TasksController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -96,7 +96,7 @@ class TasksController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -147,7 +147,7 @@ class TasksController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *
@@ -182,7 +182,7 @@ class TasksController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      *       security={
-     *           {"api_key_security_example": {}}
+     *           {"api_key": {}}
      *       }
      *     )
      *

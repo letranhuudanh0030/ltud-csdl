@@ -10,11 +10,82 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000",
+            "url": "http://localhost:8000/",
             "description": "Admin API server"
         }
     ],
     "paths": {
+        "/api/login": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logs user into the system",
+                "operationId": "loginUser",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    },
+                    {
+                        "name": "device_name",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logs out current logged in user session",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/api/customers": {
             "get": {
                 "tags": [
@@ -33,7 +104,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -64,7 +135,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -98,7 +169,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -141,7 +212,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -173,7 +244,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -236,7 +307,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -267,7 +338,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -301,7 +372,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -344,7 +415,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -376,7 +447,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -410,7 +481,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -433,7 +504,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -660,7 +731,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -691,7 +762,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -725,7 +796,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -768,7 +839,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -800,7 +871,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -823,7 +894,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": [
+                        "api_key": [
                             123
                         ]
                     }
@@ -856,7 +927,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -890,7 +961,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -933,7 +1004,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             },
@@ -965,7 +1036,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -999,7 +1070,7 @@
                 },
                 "security": [
                     {
-                        "api_key_security_example": []
+                        "api_key": []
                     }
                 ]
             }
@@ -1143,27 +1214,17 @@
             }
         },
         "securitySchemes": {
-            "Password Based": {
-                "type": "oauth2",
-                "description": "Use a global client_id / client_secret and your username / password combo to obtain a token",
+            "api_key": {
+                "type": "http",
+                "name": "api_key",
                 "in": "header",
-                "flows": {
-                    "password": {
-                        "authorizationUrl": "/oauth/authorize",
-                        "tokenUrl": "/oauth/token",
-                        "refreshUrl": "/oauth/token/refresh",
-                        "scopes": {}
-                    }
-                },
-                "scheme": "https"
+                "scheme": "bearer"
             }
         }
     },
     "security": [
         {
-            "oauth2": [
-                "read:oauth2"
-            ]
+            "api_key": []
         }
     ]
 }
