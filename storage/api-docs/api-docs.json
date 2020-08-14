@@ -16,39 +16,33 @@
     ],
     "paths": {
         "/api/login": {
-            "get": {
+            "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Logs user into the system",
                 "operationId": "loginUser",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "email"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "password"
-                        }
-                    },
-                    {
-                        "name": "device_name",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "admin123"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -56,16 +50,11 @@
                     "400": {
                         "description": "Bad request"
                     }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
+                }
             }
         },
         "/api/logout": {
-            "get": {
+            "post": {
                 "tags": [
                     "Auth"
                 ],
@@ -281,10 +270,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             }
@@ -538,10 +524,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             }
@@ -578,10 +561,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             }
@@ -618,10 +598,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             },
@@ -667,10 +644,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             },
@@ -705,10 +679,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:roles",
-                            "read:roles"
-                        ]
+                        "api_key": []
                     }
                 ]
             }

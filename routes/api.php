@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('login', 'API\AuthController@login');
+Route::post('login', 'API\AuthController@login');
+
+Route::post('send', 'API\AuthController@sendMail');
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('logout', 'API\AuthController@logout');
+    Route::post('logout', 'API\AuthController@logout');
     
     Route::get('customers/{id}/events', 'API\CustomersController@showEvent');
     Route::apiResource('customers', 'API\CustomersController', ['except' => ['create', 'edit']]);
-
+    
     Route::get('users/{id}/tasks', 'API\UsersController@showTask');
     Route::apiResource('users', 'API\UsersController', ['except' => ['create', 'edit']]);
     

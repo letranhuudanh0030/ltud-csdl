@@ -7,8 +7,10 @@ use App\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomersResource;
 use App\Http\Resources\EventsResource;
+use App\Mail\ConfirmCustomer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CustomersController extends Controller
 {
@@ -63,6 +65,7 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $customer = Customer::create($request->except('event'));
         if($request->event){
             $eventReq = $request->event;
@@ -73,7 +76,6 @@ class CustomersController extends Controller
                 'event' => $eventReq
             ]);
             $event = Event::create($eventReq);
-
         }
         return response('Created successfully!', 200 );
     }
@@ -135,7 +137,7 @@ class CustomersController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
@@ -182,6 +184,7 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $customer = Customer::findOrFail($id);
         $customer->update($request->except('event'));
         if($request->event){

@@ -11,14 +11,16 @@ class ConfirmCustomer extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $customer;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($customer)
     {
-        //
+        $this->customer = $customer;
     }
 
     /**

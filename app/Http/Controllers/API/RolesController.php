@@ -66,7 +66,7 @@ class RolesController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
@@ -102,7 +102,7 @@ class RolesController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
@@ -136,7 +136,7 @@ class RolesController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
@@ -188,7 +188,7 @@ class RolesController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
@@ -224,7 +224,7 @@ class RolesController extends Controller
      *      @OA\Response(response=404, description="Resource Not Found"),
      *      security={
      *         {
-     *             "oauth2_security_example": {"write:roles", "read:roles"}
+     *             "api_key": {}
      *         }
      *     },
      * )
