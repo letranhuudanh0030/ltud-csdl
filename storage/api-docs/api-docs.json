@@ -1045,6 +1045,40 @@
                     }
                 ]
             }
+        },
+        "/api/users/{name}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Show Users By Name",
+                "description": "Returns user list data",
+                "operationId": "getUsersByName",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
         }
     },
     "components": {

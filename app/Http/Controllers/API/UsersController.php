@@ -141,6 +141,40 @@ class UsersController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/users/{name}",
+     *      operationId="getUsersByName",
+     *      tags={"Users"},
+     *      summary="Show Users By Name",
+     *      description="Returns user list data",
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="Name",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key": {}}
+     *       }
+     *     )
+     *
+     * Returns list of task
+     */
+    public function showUserListByName($name)
+    {
+        $users = User::select('id', 'name', 'email')->where('name', 'like', '%' . $name . '%')->get();
+        return $users;
+    }
+
+    /**
      * @OA\Put(
      *      path="/api/users/{id}",
      *      operationId="updateUser",
