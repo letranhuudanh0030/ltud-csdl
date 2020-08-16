@@ -264,9 +264,9 @@ class EventsController extends Controller
 
         $event = Event::find($id);
         $event->user()->attach($request->ids);
-        // foreach ($event->user as $user) {
-        //     Mail::to($user->email)->send(new RequestUser($event, $request, $user));
-        // }
+        foreach ($event->user as $user) {
+            Mail::to($user->email)->send(new RequestUser($event, $request, $user));
+        }
         return response('Store user to event successfully!', 200);
     }
 
