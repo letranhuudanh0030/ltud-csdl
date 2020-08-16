@@ -231,7 +231,19 @@ class EventsController extends Controller
      *          description="User object that needs to be added to the store",
      *          required=true,
      *          @OA\JsonContent(
-     *              
+     *              @OA\Property(
+     *                  property="ids", 
+     *                  type="array",
+     *                  @OA\Items()
+     *              ),
+     *              @OA\Property(
+     *                  property="subject",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  type="string"
+     *              )
      *          ),
      *      ),
      *      @OA\Response(
@@ -250,10 +262,10 @@ class EventsController extends Controller
     {
 
         $event = Event::find($id);
-        $event->user()->sync($request->toArray());
+        $event->user()->sync($request->ids);
         // return $event->user->count();
         foreach ($event->user as $user) {
-            Mail::to($user->email)->send(new RequestUser(123));
+            Mail::to($user->email)->send(new RequestUser($event, $request));
             // return ;
         }
         return response('Store user to event successfully!', 200);
