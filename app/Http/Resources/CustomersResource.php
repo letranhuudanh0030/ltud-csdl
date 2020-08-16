@@ -21,6 +21,7 @@ class CustomersResource extends JsonResource
             $eventArr = [];
         } else {
             $eventArr = [
+                'id' => $this->event->first()['id'],
                 'name' => $this->event->first()['name'],
                 'time_start' => $this->event->first()['time_start'],
                 'time_end' => $this->event->first()['time_end'],
