@@ -86,4 +86,9 @@ class Event extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'user_event')->withTimestamps();
+    }
 }

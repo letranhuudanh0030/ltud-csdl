@@ -6,8 +6,10 @@ use App\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventsResource;
 use App\Http\Resources\TasksResource;
+use App\Mail\RequestUser;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventsController extends Controller
 {
@@ -32,14 +34,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        return EventsResource::collection(Event::orderBy('created_at', 'desc')->paginate(10)); 
+        return EventsResource::collection(Event::orderBy('created_at', 'desc')->paginate(10));
     }
 
-    
-    public function create()
-    {
-        //
-    }
 
     /**
      * @OA\Post(
@@ -139,17 +136,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * @OA\Put(
      *      path="/api/events/{id}",
      *      operationId="updateEvent",
@@ -158,7 +144,7 @@ class EventsController extends Controller
      *      description="Returns use data",
      *      @OA\Parameter(
      *          name="id",
-     *          description="User ID",
+     *          description="Event ID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -224,5 +210,52 @@ class EventsController extends Controller
         $event = Event::findOrFail($id);
         $event->delete();
         return response($event->name . ' has been deleted!', 200);
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/events/{id}/users",
+     *      operationId="addEventUsers",
+     *      tags={"Events"},
+     *      summary="Add users to event",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Event ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          description="User object that needs to be added to the store",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key": {}}
+     *       }
+     *     )
+     *
+     * Returns Event
+     */
+    public function storeUserToEvent(Request $request, $id)
+    {
+
+        $event = Event::find($id);
+        $event->user()->sync($request->toArray());
+        // return $event->user->count();
+        foreach ($event->user as $user) {
+            Mail::to($user->email)->send(new RequestUser(123));
+            // return ;
+        }
+        return response('Store user to event successfully!', 200);
     }
 }

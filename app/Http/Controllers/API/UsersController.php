@@ -171,7 +171,7 @@ class UsersController extends Controller
     public function showUserListByName($name)
     {
         $users = User::select('id', 'name', 'email')->where('name', 'like', '%' . $name . '%')->get();
-        return $users;
+        return response($users, 200);
     }
 
     /**
