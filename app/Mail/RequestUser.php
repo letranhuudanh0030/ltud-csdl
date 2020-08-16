@@ -11,16 +11,18 @@ class RequestUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $event;
+    public $event, $mail, $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($event)
+    public function __construct($event, $request, $user)
     {
         $this->event = $event;
+        $this->mail = $request;
+        $this->user = $user;
     }
 
     /**
@@ -30,6 +32,6 @@ class RequestUser extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.request-user');
+        return $this->subject($this->mail->subject)->view('emails.request-user');
     }
 }

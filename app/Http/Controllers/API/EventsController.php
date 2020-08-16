@@ -9,6 +9,7 @@ use App\Http\Resources\TasksResource;
 use App\Mail\RequestUser;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class EventsController extends Controller
@@ -262,12 +263,25 @@ class EventsController extends Controller
     {
 
         $event = Event::find($id);
-        $event->user()->sync($request->ids);
-        // return $event->user->count();
-        foreach ($event->user as $user) {
-            Mail::to($user->email)->send(new RequestUser($event, $request));
-            // return ;
-        }
+        $event->user()->attach($request->ids);
+        // foreach ($event->user as $user) {
+        //     Mail::to($user->email)->send(new RequestUser($event, $request, $user));
+        // }
         return response('Store user to event successfully!', 200);
+    }
+
+
+    public function changeStatus($event_id, $user_id, $status)
+    {
+        $created = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->first()->created_at;
+        $update_status = null;
+        if(!$created) {
+            $update_status = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->update(['status' => $status, 'created_at' => now()]);
+        }
+        if($update_status){
+            redirect(url('/decline'));
+        }else{
+            redirect(url('/accept'));        
+        }
     }
 }

@@ -80,7 +80,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Logs user into the system",
+                "summary": "Get User Current",
                 "operationId": "currentUser",
                 "responses": {
                     "200": {

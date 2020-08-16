@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\RequestUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/change-status/{event_id}/{user_id}/{status}', 'API\EventsController@changeStatus');
+
+Route::get('/mailable', function(){
+    $event = App\Event::find(2);
+    return new RequestUser($event, '123');
+});
