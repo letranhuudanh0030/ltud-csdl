@@ -94,6 +94,26 @@ class AuthController extends Controller
         return response('logout', 201);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/auth",
+     *      operationId="currentUser",
+     *      tags={"Auth"},
+     *      summary="Get User Current",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request")
+     *     )
+     *
+     * Returns object
+     */
+    public function currentUser(Request $request)
+    {
+        return $request->user();
+    }
+
     public function sendMail(Request $request)
     {
         // return $request->all();

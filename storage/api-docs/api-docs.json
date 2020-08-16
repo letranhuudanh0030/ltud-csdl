@@ -75,6 +75,23 @@
                 ]
             }
         },
+        "/api/auth": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logs user into the system",
+                "operationId": "currentUser",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/api/customers": {
             "get": {
                 "tags": [

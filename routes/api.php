@@ -17,9 +17,9 @@ Route::post('login', 'API\AuthController@login');
 
 Route::post('send', 'API\AuthController@sendMail');
 
-Route::post('events/{id}/users', 'API\EventsController@storeUserToEvent');
 
 Route::middleware('auth:sanctum')->group(function() {
+    Route::get('auth', 'API\AuthController@currentUser');
     Route::post('logout', 'API\AuthController@logout');
     
     Route::get('customers/{id}/events', 'API\CustomersController@showEvent');
@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function() {
     
     
     Route::get('events/{id}/tasks', 'API\EventsController@showTask');
+    Route::post('events/{id}/users', 'API\EventsController@storeUserToEvent');
     Route::apiResource('events', 'API\EventsController', ['except' => ['create', 'edit']]);
     
     Route::apiResource('tasks', 'API\TasksController', ['except' => ['create', 'edit']]);
