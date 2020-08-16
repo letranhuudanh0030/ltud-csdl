@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Event;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomersResource extends JsonResource
@@ -14,21 +15,17 @@ class CustomersResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
 
-        $event = $this->event;
-        if(!$event->first()){
-            $eventArr = [];
-        } else {
-            $eventArr = [
-                'id' => $this->event->first()['id'],
-                'name' => $this->event->first()['name'],
-                'time_start' => $this->event->first()['time_start'],
-                'time_end' => $this->event->first()['time_end'],
-                'summary' => $this->event->first()['summary'],
-                'result' => $this->event->first()['result'],
-                'status' => $this->event->first()['status']
-            ];
+        if($this->event->first()){
+            $id = $this->event->first()->id;
+            $eventUser = Event::find($id)->user;
+            if($eventUser){
+                $user = $eventUser;
+            }else{
+                $user = null;
+            }
+        }else{
+            $user = null;
         }
 
         return [
@@ -39,7 +36,8 @@ class CustomersResource extends JsonResource
             'company' => $this->company,
             'address' => $this->address,
             'status' => $this->status,
-            'event' => $eventArr
+            'event' => $this->event->first(),
+            'user' => $user
         ];
     }
 }
