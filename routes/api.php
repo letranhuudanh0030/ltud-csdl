@@ -32,9 +32,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('roles/{id}/users', 'API\RolesController@showUser');
     Route::apiResource('roles', 'API\RolesController', ['except' => ['create', 'edit']]);
     
-    
     Route::get('events/{id}/tasks', 'API\EventsController@showTask');
     Route::post('events/{id}/users', 'API\EventsController@storeUserToEvent');
+    Route::post('events/{event_id}/users/{user_id}', 'API\EventsController@storeTaskForUser');
     Route::apiResource('events', 'API\EventsController', ['except' => ['create', 'edit']]);
     
     Route::apiResource('tasks', 'API\TasksController', ['except' => ['create', 'edit']]);

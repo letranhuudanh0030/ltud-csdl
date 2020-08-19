@@ -545,6 +545,75 @@
                 ]
             }
         },
+        "/api/events/{event_id}/users/{user_id}": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Add task for user",
+                "operationId": "addTaskUsers",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Task information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "task_start": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "task_end": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/api/roles": {
             "get": {
                 "tags": [
@@ -1209,6 +1278,16 @@
                     "status": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "ids": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
                     }
                 },
                 "type": "object"

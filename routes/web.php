@@ -24,7 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/change-status/{event_id}/{user_id}/{status}', 'API\EventsController@changeStatus');
 
-Route::get('/mailable', function(){
-    $event = App\Event::find(2);
-    return new RequestUser($event, '123');
-});
+Route::get('/message-response', function(){
+    return view('message.response-user');
+})->name('message-response');
+
+// Route::get('/mailable', function(){
+//     $event = App\Event::find(2);
+//     return new RequestUser($event, '123');
+// });

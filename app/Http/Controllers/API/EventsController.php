@@ -8,6 +8,7 @@ use App\Http\Resources\EventsResource;
 use App\Http\Resources\TasksResource;
 use App\Mail\RequestUser;
 use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -156,7 +157,7 @@ class EventsController extends Controller
      *          description="Event object that needs to be added to the update",
      *          required=true,
      *          @OA\JsonContent(
-     *              ref="#/components/schemas/Event"
+     *              ref="#/components/schemas/Event",
      *          ),
      *      ),
      *      @OA\Response(
@@ -174,8 +175,18 @@ class EventsController extends Controller
     public function update(Request $request, $id)
     {
         $event = Event::findOrFail($id);
+        // return $event->user->first()->pivot->created_at;
         $event->update($request->all());
-        return $event;
+        if($event){
+            $event->user()->sync($request->ids);
+            foreach ($event->user as $user) {
+                if(!DB::table('user_event')->where('user_id', $user->id)->first()->created_at){
+                    Mail::to($user->email)->send(new RequestUser($event, $request, $user));
+                }
+            }
+        }
+        $eventRes = new EventsResource($event);
+        return response($eventRes, 200);
     }
 
     /**
@@ -270,6 +281,78 @@ class EventsController extends Controller
         return response('Store user to event successfully!', 200);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/events/{event_id}/users/{user_id}",
+     *      operationId="addTaskUsers",
+     *      tags={"Events"},
+     *      summary="Add task for user",
+     *      @OA\Parameter(
+     *          name="event_id",
+     *          description="Event ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="user_id",
+     *          description="User ID",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          description="Task information",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="task_start",
+     *                  type="string",
+     *                  format="date-time"
+     *              ),
+     *              @OA\Property(
+     *                  property="task_end",
+     *                  type="string",
+     *                  format="date-time"
+     *              )
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key": {}}
+     *       }
+     *     )
+     *
+     * Returns Event
+     */
+    public function storeTaskForUser(Request $request, $event_id, $user_id)
+    {
+        $request->merge([
+            'event_id' => $event_id,
+            'user_id' => $user_id,
+            'task_start' => Carbon::create($request->task_start),
+            'task_end' => Carbon::create($request->task_end)
+        ]);
+        // return $request->all();
+        $task = Task::create($request->all());
+        return $task;
+    }
 
     public function changeStatus($event_id, $user_id, $status)
     {
@@ -278,10 +361,22 @@ class EventsController extends Controller
         if(!$created) {
             $update_status = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->update(['status' => $status, 'created_at' => now()]);
         }
-        if($update_status){
-            redirect(url('/decline'));
+
+        if($update_status == null){
+            return redirect()->route('message-response')->with('message', 'Email này đã được xác nhận. Không thể thao tác tiếp !')
+                                                        ->with('alert', 'Cảnh báo !')
+                                                        ->with('color', 'red');  
         }else{
-            redirect(url('/accept'));        
+            if($status == 1){
+                return redirect()->route('message-response')->with('message', 'Bạn đã đồng ý tham gia vào event '.Event::find($event_id)['name'].' !')
+                                                            ->with('alert', 'Thành công !')
+                                                            ->with('color', 'green');      
+            } else {
+                return redirect()->route('message-response')->with('message', 'Bạn đã từ chối tham gia vào event '.Event::find($event_id)['name'].' !')
+                                                            ->with('alert', 'Từ chối thành công !')
+                                                            ->with('color', 'red'); 
+            }
         }
+        
     }
 }
