@@ -83,4 +83,14 @@ class Task extends Model
 
 
     protected $fillable = ['name', 'event_id', 'user_id', 'content', 'task_start', 'task_end', 'status'];
+    
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

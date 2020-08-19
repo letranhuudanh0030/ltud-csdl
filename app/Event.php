@@ -80,7 +80,36 @@ class Event extends Model
      */
     private $status;
 
+    /**
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items()
+     * )
+     *
+     * @var integer
+     */
+    private $ids;
+    
+    /**
+     * @OA\Property(
+     *     type="string",
+     * )
+     *
+     * @var string
+     */
+    private $subject;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     * )
+     *
+     * @var string
+     */
+    private $content;
+
     protected $fillable = ['name', 'customer_id', 'time_start', 'time_end', 'summary', 'result', 'status'];
+
 
     public function customer()
     {
@@ -89,6 +118,11 @@ class Event extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'user_event')->withPivot('status');
+        return $this->belongsToMany(User::class, 'user_event')->withPivot(['status']);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class, 'event_id');
     }
 }

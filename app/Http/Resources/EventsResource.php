@@ -37,7 +37,8 @@ class EventsResource extends JsonResource
                 'updated_at' => $this->customer->updated_at,
 
             ],
-            'users' => $this->user 
+            'users' => $this->user,
+            'tasks' => TasksResource::collection($this->task) 
         ];
     }
 }
