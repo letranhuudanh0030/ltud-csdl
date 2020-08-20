@@ -9,6 +9,7 @@ use App\Http\Resources\EventsResource;
 use App\Http\Resources\TasksResource;
 use App\Mail\RequestUser;
 use App\Task;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -280,12 +281,25 @@ class EventsController extends Controller
     public function storeUserToEvent(Request $request, $id)
     {
 
+        
+
         $event = Event::find($id);
-        $event->user()->sync($request->ids);
-        foreach ($event->user as $user) {
-            Mail::to($user->email)->send(new RequestUser($event, $request, $user));
+        if($request->ids){
+            foreach ($request->ids as $id) {
+                Mail::to(User::findOrFail($id)->email)->send(new RequestUser($event, $request, User::findOrFail($id)));
+            }   
         }
+        // $event->user()->sync($request->ids);
+        
         return response('Store user to event successfully!', 200);
+    }
+
+    public function sendMail(Request $request)
+    {
+        
+        // foreach ($event->user as $user) {
+        //     Mail::to($user->email)->send(new RequestUser($event, $request, $user));
+        // }
     }
 
     /**
@@ -363,9 +377,11 @@ class EventsController extends Controller
 
     public function changeStatus($event_id, $user_id, $status)
     {
-        $created = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->first()->created_at;
+        $created = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->first();
         $update_status = null;
         if(!$created) {
+            $event = Event::findOrFail($event_id);
+            $event->user()->attach($user_id);
             $update_status = DB::table('user_event')->where('user_id', $user_id)->where('event_id', $event_id)->update(['status' => $status, 'created_at' => now()]);
         }
 
