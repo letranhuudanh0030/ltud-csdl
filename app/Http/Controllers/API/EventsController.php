@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Customer;
 use App\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventsResource;
@@ -177,7 +178,13 @@ class EventsController extends Controller
         $event = Event::findOrFail($id);
         // return $event->user->first()->pivot->created_at;
         $event->update($request->all());
-        if($event){
+        if($event->status == 1){
+            $customer = Customer::findOrFail($event->customer->id);
+            $customer->status = 1;
+            $customer->save();
+        }
+
+        if($request->ids && $event){
             $event->user()->sync($request->ids);
             foreach ($event->user as $user) {
                 if(!DB::table('user_event')->where('user_id', $user->id)->first()->created_at){
@@ -274,7 +281,7 @@ class EventsController extends Controller
     {
 
         $event = Event::find($id);
-        $event->user()->attach($request->ids);
+        $event->user()->sync($request->ids);
         foreach ($event->user as $user) {
             Mail::to($user->email)->send(new RequestUser($event, $request, $user));
         }
