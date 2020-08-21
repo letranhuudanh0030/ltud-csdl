@@ -18,7 +18,7 @@ class CustomersResource extends JsonResource
 
         if($this->event->first()){
             $id = $this->event->first()->id;
-            $eventUser = Event::find($id)->user;
+            $eventUser = Event::find($id)->user->where("pivot.status", 1);
             if($eventUser){
                 $user = $eventUser;
             }else{
