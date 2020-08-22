@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Mail;
 
 class CustomersController extends Controller
 {
+
+    public function __construct()
+    {
+        // $this->middleware('checkRole');
+    }
+
     /**
      * @OA\Get(
      *      path="/api/customers",
@@ -34,8 +40,8 @@ class CustomersController extends Controller
      * Returns list of customers
      */
     public function index()
-    {
-        return CustomersResource::collection(Customer::with('event')->orderBy('created_at', 'desc')->paginate(10)); 
+    {   
+        return CustomersResource::collection(Customer::with('event')->orderBy('created_at', 'desc')->paginate(100)); 
     }
 
     /**
@@ -70,8 +76,8 @@ class CustomersController extends Controller
         if($request->event){
             $eventReq = $request->event;
             $eventReq['customer_id'] = $customer->id;
-            $eventReq['time_start'] = Carbon::create($eventReq['time_start']);
-            $eventReq['time_end'] = Carbon::create($eventReq['time_end']);
+            $eventReq['time_start'] = Carbon::createFromFormat('Y-m-d H:i:s',$eventReq['time_start'], 'UTC');
+            $eventReq['time_end'] = Carbon::createFromFormat('Y-m-d H:i:s',$eventReq['time_end'], 'UTC');
             $request->merge([
                 'event' => $eventReq
             ]);
