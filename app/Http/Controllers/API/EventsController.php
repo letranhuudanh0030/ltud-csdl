@@ -371,7 +371,7 @@ class EventsController extends Controller
             'task_end' => Carbon::parse($request->task_end, 'Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')
         ]);
 
-        return $request->all();
+        // return $request->all();
         $task = Task::create($request->all());
         return $task;
     }
