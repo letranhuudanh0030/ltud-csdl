@@ -364,7 +364,7 @@ class EventsController extends Controller
      */
     public function storeTaskForUser(Request $request, $event_id, $user_id)
     {
-        return $request->all();
+        // return $request->all();
         $request->merge([
             'event_id' => $event_id,
             'user_id' => $user_id,

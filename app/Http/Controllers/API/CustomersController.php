@@ -76,8 +76,8 @@ class CustomersController extends Controller
         if($request->event){
             $eventReq = $request->event;
             $eventReq['customer_id'] = $customer->id;
-            $eventReq['time_start'] = Carbon::create($eventReq['time_start'], 'UTC');
-            $eventReq['time_end'] = Carbon::create($eventReq['time_end'], 'UTC');
+            $eventReq['time_start'] = Carbon::parse($eventReq['time_start'])->format('Y-m-d H:i:s');
+            $eventReq['time_end'] = Carbon::parse($eventReq['time_end'])->format('Y-m-d H:i:s');
             $request->merge([
                 'event' => $eventReq
             ]);
