@@ -367,8 +367,8 @@ class EventsController extends Controller
         $request->merge([
             'event_id' => $event_id,
             'user_id' => $user_id,
-            'task_start' => Carbon::create($request->task_start, 'UTC'),
-            'task_end' => Carbon::create($request->task_end, 'UTC')
+            'task_start' => $request->task_start,
+            'task_end' => $request->task_end
         ]);
 
         return $request->all();
