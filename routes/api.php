@@ -17,13 +17,15 @@ Route::post('login', 'API\AuthController@login');
 
 Route::post('send', 'API\AuthController@sendMail');
 
+Route::post('customers', 'API\CustomersController@store');
+
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('auth', 'API\AuthController@currentUser');
     Route::post('logout', 'API\AuthController@logout');
     
     Route::get('customers/{id}/events', 'API\CustomersController@showEvent');
-    Route::apiResource('customers', 'API\CustomersController', ['except' => ['create', 'edit']]);
+    Route::apiResource('customers', 'API\CustomersController', ['except' => ['create', 'edit', 'store']]);
     
     Route::get('users/{name}', 'API\UsersController@showUserListByName');
     Route::get('users/{id}/tasks', 'API\UsersController@showTask');
