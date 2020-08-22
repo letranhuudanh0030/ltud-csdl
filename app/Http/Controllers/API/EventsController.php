@@ -367,11 +367,11 @@ class EventsController extends Controller
         $request->merge([
             'event_id' => $event_id,
             'user_id' => $user_id,
-            'task_start' => Carbon::parse($request->task_start, 'UTC')->format('Y-m-d H:i:s'),
-            'task_end' => Carbon::parse($request->task_end, 'UTC')->format('Y-m-d H:i:s')
+            'task_start' => Carbon::parse($request->task_start, 'Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
+            'task_end' => Carbon::parse($request->task_end, 'Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')
         ]);
 
-        // return $request->all();
+        return $request->all();
         $task = Task::create($request->all());
         return $task;
     }
