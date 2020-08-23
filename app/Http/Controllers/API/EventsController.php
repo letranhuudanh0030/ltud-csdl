@@ -38,7 +38,14 @@ class EventsController extends Controller
      */
     public function index()
     {
-        return EventsResource::collection(Event::orderBy('created_at', 'desc')->paginate(100));
+        if(request()->user()->role->level_role != 0){
+            // return 1;
+            return EventsResource::collection(request()->user()->event);
+        }else {
+            return EventsResource::collection(Event::orderBy('created_at', 'desc')->paginate(100));
+            // return 2;
+
+        }
     }
 
 
@@ -372,7 +379,7 @@ class EventsController extends Controller
             'task_end' => Carbon::parse($request->task_end)->format('Y-m-d H:i:s')
         ]);
 
-        // return $request->all();
+        return $request->all();
         $task = Task::create($request->all());
         return $task;
     }
