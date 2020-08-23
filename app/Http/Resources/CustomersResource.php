@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Event;
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomersResource extends JsonResource
@@ -19,16 +20,12 @@ class CustomersResource extends JsonResource
         if($this->event->first()){
             $id = $this->event->first()->id;
             $eventUser = Event::find($id)->user->where("pivot.status", 1);
-            if($eventUser){
-                $user = $eventUser;
-            }else{
-                $user = null;
-            }
+            $user = $eventUser;
         }else{
-            $user = null;
+            $user = [];
         }
 
-        return [
+        $arrayData = [
             'id' => $this->id,
             'name' => $this->name,
             'phone' => $this->phone,
@@ -37,7 +34,21 @@ class CustomersResource extends JsonResource
             'address' => $this->address,
             'status' => $this->status,
             'event' => $this->event->first(),
-            'user' => $user
+            'user' => $user,
         ];
+
+        if(request()->user()->role->level_role != 0){
+            foreach ((array)$user as $users) {
+                foreach ($users as  $user_item) {
+                    if(request()->user()->id == $user_item->id){
+                        return $arrayData;
+                    }
+                }
+            }
+        }else{
+            return $arrayData;
+        }
     }
+
+    
 }
